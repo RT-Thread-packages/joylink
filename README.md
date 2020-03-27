@@ -20,6 +20,9 @@ joylink 软件包是 RT-Thread 系统基于 joylink v2.0.19 版本移植的用�
 
 - RTC 设备支持
 
+- WLAN 驱动框架
+
+
 
 ## 2. 软件包使用
 
@@ -249,12 +252,14 @@ send to server len:224:ret:224   // 上传设置的当前设备信息到云端
 - OTA 功能默认关闭，功能实现需要自行移植
 - 配网功能默认关闭，功能实现需要自行移植
 - EASYFLASH 的移植部分需要自行完成 [EASYFLASH](https://github.com/armink-rtt-pkgs/EasyFlash)
-- 现已在联盛德 w60X 等设备上全面支持了配网和 OTA 功能，如需更多功能支持请联系官网商务
+
+## 4. 技术支持
+- 现已在联盛德 w60X 等设备上全面支持了配网和 OTA 功能
+- 更多模块接入和功能支持请联系 [RT-Thread 官网商务](https://www.rt-thread.org/)
 
 ## 参考资料
 
 - 京东云官网：https://jdwhale.jd.com/
 - 京东云官方文档中心：https://smartdev.jd.com/docCenterDoc/index
 - 京东云下载中心：https://smartdev.jd.com/docCenterDownload/list/2
-- 京东云 C 语言设备开发流程：https://smartdev.jd.com/docCenterDoc/view/2/102/152800001/152800002#topMaoDot
 

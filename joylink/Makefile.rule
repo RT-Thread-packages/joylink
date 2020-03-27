@@ -1,0 +1,49 @@
+ARCH=x86
+CHIP=
+
+#=======  EDITER =============
+PROJECT_ROOT_PATH:=/home/lizw/workspace/joylink_dev_sdk_2.0
+
+#======= TARGET =======
+TARGET_BIN=${PROJECT_ROOT_PATH}/target/bin
+
+#======= PLAT FROM =============
+ifeq (${CHIP}, )  
+PLATFORM=${ARCH}
+else
+PLATFORM=${ARCH}_${CHIP}
+endif
+
+include ${PROJECT_ROOT_PATH}/scripts/${PLATFORM}.mk
+INCLUDES+= -I${PROJECT_ROOT_PATH}
+INCLUDES+= -I${PROJECT_ROOT_PATH}/example/
+INCLUDES+= -I${PROJECT_ROOT_PATH}/config/
+INCLUDES+= -I${PROJECT_ROOT_PATH}/softap/
+
+TARGET_LIB=${PROJECT_ROOT_PATH}/target/lib
+
+#====== COMMON ======
+
+RM = rm -rf
+CP = cp -rf
+MV = mv -f
+
+LIBS += -lm 
+
+CFLAGS += -D_SAVE_FILE_
+
+#DEV_REQ_ACTIVE_EN=no
+DEV_REQ_ACTIVE_EN=yes
+ifeq (${DEV_REQ_ACTIVE_EN}, yes)  
+CFLAGS += -D_IS_DEV_REQUEST_ACTIVE_SUPPORTED_
+endif
+
+
+DEBUG=y
+ifeq ($(DEBUG), y)
+CFLAGS += -D_GET_HOST_BY_NAME_
+else
+CFLAGS += -O2
+endif
+
+#=======================

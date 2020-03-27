@@ -1,0 +1,46 @@
+import os
+from building import *
+import rtconfig
+
+cwd  = GetCurrentDir()
+
+src  = []
+CPPDEFINES = []
+CPPPATH = [cwd + '/inc']
+
+if os.path.isdir(os.path.join(cwd, 'libs')):
+    # add ali-linkkit ports lib
+    LIBS = ['']
+    LIBPATH = [cwd + '/libs']
+
+    if rtconfig.CROSS_TOOL == 'gcc':
+        LIBS += ['libjoylink_ports_gcc']
+    elif rtconfig.CROSS_TOOL == 'keil':
+        LIBS += ['libjoylink_ports_keil']
+
+    group = DefineGroup('joylink_ports', src, depend = ['PKG_USING_JOYLINK'], CPPPATH = CPPPATH, LIBS = LIBS, LIBPATH = LIBPATH)
+else:
+    # add joylink ports source
+    src += Glob('src/joylink_extern.c')
+    src += Glob('src/joylink_extern_sub_dev.c')
+    src += Glob('src/joylink_porting_layer.c')
+
+    # OTA ports source
+    if GetDepend(['JOYLINK_USING_OTA']):
+        src += Glob('src/joylink_extern_ota.c')
+        if GetDepend(['SOC_W600_A8xx']) or GetDepend(['SOC_W601_A8xx']):
+            src += Glob('src/w60x/joylink_extern_user.c')
+        elif GetDepend(['SOC_RTL8720']):
+            src += Glob('src/rtl87xx/joylink_extern_user.c')
+
+     # softap ports source
+    if GetDepend(['JOYLINK_USING_SOFTAP']):
+        src += Glob('src/joylink_softap.c')
+        src += Glob('src/joylink_softap_start.c')
+
+    if GetDepend(['JOYLINK_USING_SMARTCONFIG']) or GetDepend(['JOYLINK_USING_THUNDER_SLAVE']):
+        src += Glob('src/joylink_config_handle.c')
+
+    group = DefineGroup('joylink_ports', src, depend = ['PKG_USING_JOYLINK'], CPPPATH = CPPPATH, CPPDEFINES = CPPDEFINES)
+
+Return('group')

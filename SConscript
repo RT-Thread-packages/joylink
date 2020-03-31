@@ -11,9 +11,9 @@ lib_path = os.path.join(cwd, 'libs')
 LIBPATH += [lib_path]
 
 if rtconfig.CROSS_TOOL == 'gcc':
-    LIBS += ['libjoylink_2.0.19.0_w60x_gcc']
+    LIBS += ['libjoylink_2.0.19.1_armcm3_gcc']
 elif rtconfig.CROSS_TOOL == 'keil':
-    LIBS += ['libjoylink_2.0.19.0_w60x_keil']
+    LIBS += ['libjoylink_2.0.19.1_armcm3_keil']
 
 path  = [cwd + '/inc']
 path += [cwd + '/inc/joylink']
